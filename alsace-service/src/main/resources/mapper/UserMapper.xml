@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alsace.service.demo.mapper.UserMapper">
+
+  <resultMap id="userMap" type="com.alsace.service.demo.domain.User">
+    <result column="id" property="id" jdbcType="DECIMAL"/>
+    <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+  </resultMap>
+
+  <select id="queryPage" parameterType="com.alsace.service.demo.domain.User" resultMap="userMap">
+    select *
+    from sys_user
+    <trim prefix="where" prefixOverrides="and ">
+      <if test="id != null">
+        id = #{id}
+      </if>
+      <if test="userName != null and userName != ''">
+        user_name = #{userName}
+      </if>
+    </trim>
+  </select>
+
+</mapper>
