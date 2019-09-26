@@ -1,9 +1,8 @@
 package com.alsace.framework.aspect;
 
 import com.alsace.framework.common.annotation.PageQuery;
-import com.alsace.framework.common.domain.BasePageParam;
+import com.alsace.framework.common.basic.BasePageParam;
 import com.github.pagehelper.PageHelper;
-import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;

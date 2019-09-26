@@ -1,6 +1,7 @@
-package com.alsace.framework.common.domain;
+package com.alsace.framework.common.basic;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,5 +17,10 @@ public class BaseEntity implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  private Date createdTime;//创建时间
+  private String createdBy;//创建人
+  private Date modifiedTime;//修改时间
+  private String modifiedBy;//修改人
 
 }

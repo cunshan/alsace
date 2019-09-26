@@ -1,4 +1,4 @@
-package com.alsace.web;
+package com.alsace;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

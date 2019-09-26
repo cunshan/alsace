@@ -1,4 +1,4 @@
-package com.alsace.framework.common.domain;
+package com.alsace.framework.common.basic;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

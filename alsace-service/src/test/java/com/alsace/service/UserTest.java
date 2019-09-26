@@ -1,8 +1,8 @@
 package com.alsace.service;
 
-import com.alsace.service.demo.domain.User;
-import com.alsace.service.demo.serivce.UserService;
-import com.github.pagehelper.PageHelper;
+import com.alsace.service.user.domain.User;
+import com.alsace.service.user.serivce.UserService;
+import com.alsace.service.user.serivce.impl.UserServiceImpl;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class UserTest {
 
   @Autowired
-  private UserService userService;
+  private UserServiceImpl userService;
 
 
   @Test
@@ -27,5 +27,12 @@ public class UserTest {
     List<User> userList = userService.queryPage(param);
     Assert.assertTrue(!userList.isEmpty());
 
+  }
+
+  @Test
+  public void testCreate(){
+    User param = new User();
+    param.setUserName("aaa");
+    userService.create(param);
   }
 }

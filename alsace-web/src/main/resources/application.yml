@@ -1,0 +1,50 @@
+server:
+  port: 8080
+  error:
+    path: /error
+  servlet:
+    context-path: /
+#============
+# 日志级别
+#============
+logging:
+  config: classpath:logback-spring.xml
+  level:
+    root: info
+    druid.sql.Statement: debug
+    druid.sql.ResultSet: debug
+spring:
+  jpa:
+    database: mysql
+    show-sql: true
+  datasource:
+    druid:
+      filters: stat,wall,slf4j
+      filter:
+        commons-log:
+          statement-log-enabled: true
+          statement-executable-sql-log-enable: true
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+    url: jdbc:mysql://localhost:3306/alsace?allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Hongkong
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  aop:
+    proxy-target-class: false
+
+# ==============
+# mybatis 配置
+# ==============
+mybatis:
+  mapper-locations: mapper/*Mapper.xml
+
+#===============
+# pageHelper 配置
+#===============
+pagehelper:
+  helper-dialect: mysql
+  params: count=countSql

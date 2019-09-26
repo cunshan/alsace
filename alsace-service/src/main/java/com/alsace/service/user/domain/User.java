@@ -1,6 +1,6 @@
-package com.alsace.service.demo.domain;
+package com.alsace.service.user.domain;
 
-import com.alsace.framework.common.domain.BasePageParam;
+import com.alsace.framework.common.basic.BasePageParam;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import lombok.Data;

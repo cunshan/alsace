@@ -1,6 +1,6 @@
-package com.alsace.service.demo.mapper;
+package com.alsace.service.user.mapper;
 
-import com.alsace.service.demo.domain.User;
+import com.alsace.service.user.domain.User;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 
