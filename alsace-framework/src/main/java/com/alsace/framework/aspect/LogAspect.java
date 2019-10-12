@@ -31,7 +31,7 @@ public class LogAspect {
   @Before("logAop()")
   public void doBefore(JoinPoint joinPoint) {
     LogInfo logInfo = getLogInfo(joinPoint);
-    LogUtils.printInfo(log,Constants.LOG_MODIFY_BEFORE, logInfo.operateId,
+    LogUtils.printInfo(log, Constants.LOG_MODIFY_BEFORE, logInfo.operateId,
         logInfo.modifyType, logInfo.className,
         logInfo.methodName, logInfo.argsJson);
   }
@@ -55,7 +55,7 @@ public class LogAspect {
   @AfterReturning(value = "logAop()", returning = "res")
   public void doAfterReturning(JoinPoint joinPoint, Object res) {
     LogInfo logInfo = getLogInfo(joinPoint);
-    LogUtils.printInfo(log,Constants.LOG_MODIFY_AFTER, logInfo.operateId,
+    LogUtils.printInfo(log, Constants.LOG_MODIFY_AFTER, logInfo.operateId,
         logInfo.modifyType, JSON.toJSONString(res));
     saveLogInfo(logInfo);
   }
@@ -64,16 +64,16 @@ public class LogAspect {
    * TODO 保存操作日志
    */
   private void saveLogInfo(LogInfo logInfo) {
-    if(logInfo.saveParams){
+    if (logInfo.saveParams) {
       //TODO 持久化保存日志信息
-      LogUtils.printInfo(log,"持久化保存日志信息");
+      LogUtils.printInfo(log, "持久化保存日志信息:{}", JSON.toJSONString(logInfo));
     }
   }
 
   @AfterThrowing(value = "logAop()", throwing = "ex")
   public void doAfterThrowing(JoinPoint joinPoint, Exception ex) {
     LogInfo logInfo = getLogInfo(joinPoint);
-    LogUtils.printInfo(log,Constants.LOG_MODIFY_EXCEPTION, logInfo.operateId,
+    LogUtils.printInfo(log, Constants.LOG_MODIFY_EXCEPTION, logInfo.operateId,
         logInfo.modifyType, Throwables.getStackTraceAsString(ex));
   }
 
