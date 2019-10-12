@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alsace.framework.common.Constants;
 import com.alsace.framework.common.annotation.LogModify;
 import com.alsace.framework.common.enums.LogModifyType;
+import com.alsace.framework.utils.LogUtils;
 import com.google.common.base.Throwables;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -30,7 +31,7 @@ public class LogAspect {
   @Before("logAop()")
   public void doBefore(JoinPoint joinPoint) {
     LogInfo logInfo = getLogInfo(joinPoint);
-    log.info(Constants.LOG_MODIFY_BEFORE, logInfo.operateId,
+    LogUtils.printInfo(log,Constants.LOG_MODIFY_BEFORE, logInfo.operateId,
         logInfo.modifyType, logInfo.className,
         logInfo.methodName, logInfo.argsJson);
   }
@@ -41,21 +42,38 @@ public class LogAspect {
     String methodName = signature.getName();
     String className = signature.getDeclaringTypeName();
     LogModify logModify = signature.getMethod().getAnnotation(LogModify.class);
-    return new LogInfo(LogOperateIdHolder.getId(), className,
-        methodName, JSON.toJSONString(args), logModify.modifyType());
+    LogInfo logInfo = new LogInfo();
+    logInfo.operateId = LogOperateIdHolder.getId();
+    logInfo.className = className;
+    logInfo.methodName = methodName;
+    logInfo.saveParams = logModify.saveParams();
+    logInfo.argsJson = JSON.toJSONString(args);
+    logInfo.modifyType = logModify.modifyType();
+    return logInfo;
   }
 
   @AfterReturning(value = "logAop()", returning = "res")
   public void doAfterReturning(JoinPoint joinPoint, Object res) {
     LogInfo logInfo = getLogInfo(joinPoint);
-    log.info(Constants.LOG_MODIFY_AFTER, logInfo.operateId,
+    LogUtils.printInfo(log,Constants.LOG_MODIFY_AFTER, logInfo.operateId,
         logInfo.modifyType, JSON.toJSONString(res));
+    saveLogInfo(logInfo);
+  }
+
+  /**
+   * TODO 保存操作日志
+   */
+  private void saveLogInfo(LogInfo logInfo) {
+    if(logInfo.saveParams){
+      //TODO 持久化保存日志信息
+      LogUtils.printInfo(log,"持久化保存日志信息");
+    }
   }
 
   @AfterThrowing(value = "logAop()", throwing = "ex")
   public void doAfterThrowing(JoinPoint joinPoint, Exception ex) {
     LogInfo logInfo = getLogInfo(joinPoint);
-    log.info(Constants.LOG_MODIFY_EXCEPTION, logInfo.operateId,
+    LogUtils.printInfo(log,Constants.LOG_MODIFY_EXCEPTION, logInfo.operateId,
         logInfo.modifyType, Throwables.getStackTraceAsString(ex));
   }
 
@@ -68,6 +86,7 @@ public class LogAspect {
     private String className;//调用class类名称
     private String methodName;//调用方法名称
     private String argsJson;//参数JSON
+    private boolean saveParams;//是否保存参数和结果
 
     private LogModifyType modifyType;//操作类型
   }

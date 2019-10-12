@@ -22,4 +22,6 @@ public @interface LogModify {
 
   LogModifyType modifyType();
 
+  boolean saveParams() default true;
+
 }
