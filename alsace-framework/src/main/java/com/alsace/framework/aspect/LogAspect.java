@@ -7,6 +7,7 @@ import com.alsace.framework.common.enums.LogModifyType;
 import com.alsace.framework.utils.LogUtils;
 import com.google.common.base.Throwables;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -80,6 +81,7 @@ public class LogAspect {
 
   @AllArgsConstructor
   @NoArgsConstructor
+  @Data
   private class LogInfo {
 
     private String operateId;//切面操作ID
