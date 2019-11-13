@@ -9,22 +9,14 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>alsace-web</artifactId>
+  <artifactId>alsace-framework-starter</artifactId>
 
+  <packaging>jar</packaging>
   <dependencies>
     <dependency>
       <groupId>com.alsace</groupId>
-      <artifactId>alsace-framework-starter</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.alsace</groupId>
-      <artifactId>alsace-service</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-thymeleaf</artifactId>
+      <artifactId>alsace-framework</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
     </dependency>
   </dependencies>
 

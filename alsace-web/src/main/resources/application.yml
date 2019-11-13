@@ -46,3 +46,7 @@ mybatis:
 pagehelper:
   helper-dialect: mysql
   params: count=countSql
+
+
+com:
+  alsace: aa

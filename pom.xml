@@ -8,6 +8,7 @@
     <module>alsace-framework</module>
     <module>alsace-web</module>
     <module>alsace-service</module>
+    <module>alsace-framework-starter</module>
   </modules>
   <parent>
     <groupId>org.springframework.boot</groupId>
