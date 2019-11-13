@@ -29,7 +29,7 @@ public class PageHelperAspect {
       //如果注解里指定了含有分页信息的参数下标  直接去该参数
       arg = joinPoint.getArgs()[index];
     } else {
-      //如果没指定含有分页信息的参数下标，便利参数取第一个复合条件的
+      //如果没指定含有分页信息的参数下标，遍历参数取第一个符合条件的
       for (Object joinPointArg : joinPoint.getArgs()) {
         if (joinPointArg instanceof BasePageParam) {
           arg = joinPointArg;
