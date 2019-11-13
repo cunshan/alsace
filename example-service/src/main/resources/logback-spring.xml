@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <!--<include resource="org/springframework/boot/logging/logback/base.xml" /> -->
+
+  <!-- 转换读取yml文件里的配置 -->
+  <springProperty scope="context" name="application.name" source="spring.application.name"/>
+  <springProperty scope="context" name="profiles.active" source="spring.profiles.active"/>
+
+  <!-- 控制台输出 -->
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>
+        <![CDATA[%d{HH:mm:ss.SSS} %boldRed(%X{currentUser}) %highlight(%-5p) [%boldYellow(%-4t)] %cyan([%c{}-%L]) %m%n]]>
+      </pattern>
+      <charset>UTF-8</charset>
+    </encoder>
+  </appender>
+
+  <!-- 开发环境 -->
+  <springProfile name="default,dev,demo">
+    <root level="DEBUG">
+      <appender-ref ref="STDOUT"/>
+    </root>
+  </springProfile>
+
+  <!-- 测试,生产环境 -->
+  <springProfile name="test,prod">
+    <!-- 按日期生成日志文件 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <fileNamePattern>logs/${application.name}.%d{yyyy-MM-dd}.${profiles.active}.%i.log</fileNamePattern>
+        <maxHistory>60</maxHistory>
+        <timeBasedFileNamingAndTriggeringPolicy
+            class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+          <maxFileSize>16MB</maxFileSize>
+        </timeBasedFileNamingAndTriggeringPolicy>
+      </rollingPolicy>
+      <encoder>
+        <pattern>
+          <![CDATA[%d{HH:mm:ss.SSS} %-5p [%-4t] [%c{300}-%L] %m%n]]>
+        </pattern>
+        <charset>UTF-8</charset>
+      </encoder>
+    </appender>
+    <root >
+      <appender-ref ref="STDOUT"/>
+      <appender-ref ref="FILE"/>
+    </root>
+  </springProfile>
+
+</configuration>
