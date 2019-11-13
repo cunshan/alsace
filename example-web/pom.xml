@@ -19,7 +19,7 @@
     </dependency>
     <dependency>
       <groupId>com.alsace</groupId>
-      <artifactId>alsace-service</artifactId>
+      <artifactId>example-service</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
