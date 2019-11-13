@@ -1,8 +1,7 @@
 package com.alsace.service;
 
-import com.alsace.service.user.domain.User;
-import com.alsace.service.user.serivce.UserService;
-import com.alsace.service.user.serivce.impl.UserServiceImpl;
+import com.example.service.user.domain.User;
+import com.example.service.user.serivce.UserService;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;

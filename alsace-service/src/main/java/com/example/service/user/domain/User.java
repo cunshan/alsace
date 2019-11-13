@@ -1,4 +1,4 @@
-package com.alsace.service.user.domain;
+package com.example.service.user.domain;
 
 import com.alsace.framework.common.basic.BasePageParam;
 import javax.persistence.Entity;

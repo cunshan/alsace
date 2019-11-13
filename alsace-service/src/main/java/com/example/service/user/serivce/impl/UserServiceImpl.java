@@ -1,12 +1,12 @@
-package com.alsace.service.user.serivce.impl;
+package com.example.service.user.serivce.impl;
 
 import com.alsace.framework.common.annotation.LogModify;
 import com.alsace.framework.common.annotation.PageQuery;
 import com.alsace.framework.common.enums.LogModifyType;
-import com.alsace.service.user.domain.User;
-import com.alsace.service.user.mapper.UserMapper;
-import com.alsace.service.user.repository.UserRepository;
-import com.alsace.service.user.serivce.UserService;
+import com.example.service.user.domain.User;
+import com.example.service.user.mapper.UserMapper;
+import com.example.service.user.repository.UserRepository;
+import com.example.service.user.serivce.UserService;
 import com.github.pagehelper.Page;
 import java.util.List;
 import javax.annotation.Resource;

@@ -1,8 +1,8 @@
-package com.alsace.web.controller;
+package com.example.web.controller;
 
 import com.alsace.framework.common.basic.BaseController;
-import com.alsace.service.user.domain.User;
-import com.alsace.service.user.serivce.UserService;
+import com.example.service.user.domain.User;
+import com.example.service.user.serivce.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
