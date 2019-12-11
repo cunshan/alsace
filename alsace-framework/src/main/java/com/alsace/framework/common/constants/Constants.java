@@ -1,4 +1,4 @@
-package com.alsace.framework.common;
+package com.alsace.framework.common.constants;
 
 public class Constants {
 

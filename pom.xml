@@ -6,9 +6,9 @@
   <packaging>pom</packaging>
   <modules>
     <module>alsace-framework</module>
-    <module>alsace-web</module>
-    <module>alsace-service</module>
-    <module>alsace-framework-starter</module>
+    <module>alsace-spring-boot-starter</module>
+    <module>example-service</module>
+    <module>example-web</module>
   </modules>
   <parent>
     <groupId>org.springframework.boot</groupId>

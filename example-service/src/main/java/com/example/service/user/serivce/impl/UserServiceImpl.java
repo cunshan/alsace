@@ -1,7 +1,7 @@
 package com.example.service.user.serivce.impl;
 
-import com.alsace.framework.common.annotation.LogModify;
-import com.alsace.framework.common.annotation.PageQuery;
+import com.alsace.framework.annotation.LogModify;
+import com.alsace.framework.annotation.PageQuery;
 import com.alsace.framework.common.enums.LogModifyType;
 import com.example.service.user.domain.User;
 import com.example.service.user.mapper.UserMapper;
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  @LogModify(modifyType = LogModifyType.CREATE)
+  @LogModify(operationType = "")
   public User create(User domain) {
     return userRepository.save(domain);
   }

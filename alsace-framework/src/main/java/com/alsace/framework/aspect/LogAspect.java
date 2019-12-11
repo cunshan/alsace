@@ -1,8 +1,8 @@
 package com.alsace.framework.aspect;
 
 import com.alibaba.fastjson.JSON;
-import com.alsace.framework.common.Constants;
-import com.alsace.framework.common.annotation.LogModify;
+import com.alsace.framework.common.constants.Constants;
+import com.alsace.framework.annotation.LogModify;
 import com.alsace.framework.common.enums.LogModifyType;
 import com.alsace.framework.utils.LogUtils;
 import com.google.common.base.Throwables;
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class LogAspect {
 
-  @Pointcut("@annotation(com.alsace.framework.common.annotation.LogModify)")
+  @Pointcut("@annotation(com.alsace.framework.annotation.LogModify)")
   public void logAop() {
   }
 
@@ -33,7 +33,7 @@ public class LogAspect {
   public void doBefore(JoinPoint joinPoint) {
     LogInfo logInfo = getLogInfo(joinPoint);
     LogUtils.printInfo(log, Constants.LOG_MODIFY_BEFORE, logInfo.operateId,
-        logInfo.modifyType, logInfo.className,
+        logInfo.operationType, logInfo.className,
         logInfo.methodName, logInfo.argsJson);
   }
 
@@ -49,7 +49,7 @@ public class LogAspect {
     logInfo.methodName = methodName;
     logInfo.saveParams = logModify.saveParams();
     logInfo.argsJson = JSON.toJSONString(args);
-    logInfo.modifyType = logModify.modifyType();
+    logInfo.operationType = logModify.operationType();
     return logInfo;
   }
 
@@ -57,7 +57,7 @@ public class LogAspect {
   public void doAfterReturning(JoinPoint joinPoint, Object res) {
     LogInfo logInfo = getLogInfo(joinPoint);
     LogUtils.printInfo(log, Constants.LOG_MODIFY_AFTER, logInfo.operateId,
-        logInfo.modifyType, JSON.toJSONString(res));
+        logInfo.operationType, JSON.toJSONString(res));
     saveLogInfo(logInfo);
   }
 
@@ -75,7 +75,7 @@ public class LogAspect {
   public void doAfterThrowing(JoinPoint joinPoint, Exception ex) {
     LogInfo logInfo = getLogInfo(joinPoint);
     LogUtils.printInfo(log, Constants.LOG_MODIFY_EXCEPTION, logInfo.operateId,
-        logInfo.modifyType, Throwables.getStackTraceAsString(ex));
+        logInfo.operationType, Throwables.getStackTraceAsString(ex));
   }
 
 
@@ -90,6 +90,6 @@ public class LogAspect {
     private String argsJson;//参数JSON
     private boolean saveParams;//是否保存参数和结果
 
-    private LogModifyType modifyType;//操作类型
+    private String operationType;//操作类型
   }
 }

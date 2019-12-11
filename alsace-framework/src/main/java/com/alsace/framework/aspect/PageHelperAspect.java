@@ -1,6 +1,6 @@
 package com.alsace.framework.aspect;
 
-import com.alsace.framework.common.annotation.PageQuery;
+import com.alsace.framework.annotation.PageQuery;
 import com.alsace.framework.common.basic.BasePageParam;
 import com.github.pagehelper.PageHelper;
 import org.aspectj.lang.JoinPoint;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PageHelperAspect {
 
-  @Pointcut("@annotation(com.alsace.framework.common.annotation.PageQuery)")
+  @Pointcut("@annotation(com.alsace.framework.annotation.PageQuery)")
   public void queryPage() {
   }
 

@@ -1,5 +1,6 @@
-package com.alsace.framework.common.annotation;
+package com.alsace.framework.annotation;
 
+import com.alsace.framework.common.enums.LogModifyType;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -15,10 +16,12 @@ import java.lang.annotation.Target;
 @Documented
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PageQuery {
+public @interface LogModify {
 
-  int value() default -1;
+  String desc() default "";
 
-  boolean countSql() default true;
+  String operationType();
+
+  boolean saveParams() default true;
 
 }
