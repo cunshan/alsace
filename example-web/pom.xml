@@ -14,7 +14,7 @@
   <dependencies>
     <dependency>
       <groupId>com.alsace</groupId>
-      <artifactId>alsace-framework-starter</artifactId>
+      <artifactId>alsace-spring-boot-starter</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>

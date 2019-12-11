@@ -1,9 +1,8 @@
 package com.alsace.framework.aspect;
 
-import com.alibaba.fastjson.JSON;
 import com.alsace.framework.common.constants.Constants;
 import com.alsace.framework.annotation.LogModify;
-import com.alsace.framework.common.enums.LogModifyType;
+import com.alsace.framework.utils.GsonUtils;
 import com.alsace.framework.utils.LogUtils;
 import com.google.common.base.Throwables;
 import lombok.AllArgsConstructor;
@@ -48,7 +47,7 @@ public class LogAspect {
     logInfo.className = className;
     logInfo.methodName = methodName;
     logInfo.saveParams = logModify.saveParams();
-    logInfo.argsJson = JSON.toJSONString(args);
+    logInfo.argsJson = GsonUtils.toJson(args);
     logInfo.operationType = logModify.operationType();
     return logInfo;
   }
@@ -57,7 +56,7 @@ public class LogAspect {
   public void doAfterReturning(JoinPoint joinPoint, Object res) {
     LogInfo logInfo = getLogInfo(joinPoint);
     LogUtils.printInfo(log, Constants.LOG_MODIFY_AFTER, logInfo.operateId,
-        logInfo.operationType, JSON.toJSONString(res));
+        logInfo.operationType, GsonUtils.toJson(res));
     saveLogInfo(logInfo);
   }
 
@@ -67,7 +66,7 @@ public class LogAspect {
   private void saveLogInfo(LogInfo logInfo) {
     if (logInfo.saveParams) {
       //TODO 持久化保存日志信息
-      LogUtils.printInfo(log, "持久化保存日志信息:{}", JSON.toJSONString(logInfo));
+      LogUtils.printInfo(log, "持久化保存日志信息:{}", GsonUtils.toJson(logInfo));
     }
   }
 
