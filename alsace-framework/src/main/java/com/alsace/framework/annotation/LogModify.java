@@ -1,6 +1,5 @@
 package com.alsace.framework.annotation;
 
-import com.alsace.framework.common.enums.LogModifyType;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
