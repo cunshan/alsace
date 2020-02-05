@@ -17,6 +17,11 @@ spring:
   jpa:
     database: mysql
     show-sql: true
+    hibernate:
+      ## 项目启动的时候自动更新表结构
+      ddl-auto: update
+    ## 指定建表引擎使用innodb
+    database-platform: org.hibernate.dialect.MySQL57Dialect
   datasource:
     druid:
       filters: stat,wall,slf4j
@@ -30,7 +35,7 @@ spring:
           merge-sql: true
     url: jdbc:mysql://localhost:3306/alsace?allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Hongkong
     username: root
-    password: root
+    password: camelot.qd
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
@@ -46,7 +51,3 @@ mybatis:
 pagehelper:
   helper-dialect: mysql
   params: count=countSql
-
-
-com:
-  alsace: aa

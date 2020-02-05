@@ -1,12 +1,13 @@
 package com.alsace.framework.config;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import com.alsace.framework.config.properties.AlsaceProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-@ConditionalOnProperty("com.alsace")
 @Configuration
 @ComponentScan("com.alsace")
+@EnableConfigurationProperties({AlsaceProperties.class})
 public class AlsaceFrameworkAutoConfig {
 
 

@@ -21,6 +21,4 @@ public @interface LogModify {
 
   String operationType();
 
-  boolean saveParams() default true;
-
 }
