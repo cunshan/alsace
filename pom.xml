@@ -7,8 +7,6 @@
   <modules>
     <module>alsace-framework</module>
     <module>alsace-spring-boot-starter</module>
-    <module>example-service</module>
-    <module>example-web</module>
   </modules>
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -30,7 +28,7 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <optional>true</optional>
+      <!--<optional>true</optional>-->
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -97,30 +95,37 @@
     </dependencies>
   </dependencyManagement>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
+  <!--<build>-->
+    <!--<plugins>-->
+      <!--<plugin>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+      <!--</plugin>-->
+    <!--</plugins>-->
+  <!--</build>-->
 
-  <repositories>
+  <!--<repositories>-->
+    <!--<repository>-->
+      <!--<id>central</id>-->
+      <!--<name>aliyun maven</name>-->
+      <!--<url>http://maven.aliyun.com/nexus/content/groups/public/</url>-->
+      <!--<layout>default</layout>-->
+      <!--&lt;!&ndash; 是否开启发布版构件下载 &ndash;&gt;-->
+      <!--<releases>-->
+        <!--<enabled>true</enabled>-->
+      <!--</releases>-->
+      <!--&lt;!&ndash; 是否开启快照版构件下载 &ndash;&gt;-->
+      <!--<snapshots>-->
+        <!--<enabled>false</enabled>-->
+      <!--</snapshots>-->
+    <!--</repository>-->
+  <!--</repositories>-->
+  <distributionManagement>
     <repository>
-      <id>central</id>
-      <name>aliyun maven</name>
-      <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-      <layout>default</layout>
-      <!-- 是否开启发布版构件下载 -->
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <!-- 是否开启快照版构件下载 -->
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
+      <id>github</id>
+      <name>GitHub cunshan Apache Maven Packages</name>
+      <url>https://maven.pkg.github.com/cunshan/alsace</url>
     </repository>
-  </repositories>
+  </distributionManagement>
 
 </project>
