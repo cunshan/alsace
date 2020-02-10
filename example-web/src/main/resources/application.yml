@@ -3,7 +3,7 @@ server:
   error:
     path: /error
   servlet:
-    context-path: /
+    context-path: /api/v1
 #============
 # 日志级别
 #============
@@ -14,6 +14,8 @@ logging:
     druid.sql.Statement: debug
     druid.sql.ResultSet: debug
 spring:
+  profiles:
+    active: default,shiro
   jpa:
     database: mysql
     show-sql: true
@@ -38,6 +40,7 @@ spring:
     password: camelot.qd
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+
 
 # ==============
 # mybatis 配置

@@ -1,0 +1,20 @@
+shiro:
+  loginUrl: /login
+  unauthorizedUrl: /403
+  sessionManager:
+    sessionIdCookieEnabled: true
+
+
+shiro-redis:
+  redis-manager:
+    deploy-mode: standalone
+    host: 127.0.0.1:6379
+    password: camelot.qd
+  session-dao:
+#    key-prefix: shiro:session:
+    cache-manager:
+      principal-id-field-name: loginAccount
+#      key-prefix: shiro:cache:
+
+
+
