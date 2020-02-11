@@ -23,7 +23,7 @@ public class UserRealm extends AuthorizingRealm {
 
   @Override
   protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-    ShiroPrincipal principal = (ShiroPrincipal)principalCollection.getPrimaryPrincipal();
+    ShiroPrincipal principal = (ShiroPrincipal) principalCollection.getPrimaryPrincipal();
     String loginAccount = principal.getLoginAccount();
     //获取权限列表
     List<String> perms = shiroUserService.getPermissionList(loginAccount);
@@ -36,10 +36,12 @@ public class UserRealm extends AuthorizingRealm {
   protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
       throws AuthenticationException {
     // 登录校验
-    UsernamePasswordToken token  = (UsernamePasswordToken)authenticationToken;
+    UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
     //用户登录逻辑
-    ShiroPrincipal principal = shiroUserService.login(token.getUsername(),token.getPassword());
-    return new SimpleAuthenticationInfo(principal,principal.getPassword(), ByteSource.Util.bytes("user"),getName());
+    ShiroPrincipal principal = shiroUserService
+        .login(token.getUsername(), new String(token.getPassword()));
+    return new SimpleAuthenticationInfo(principal, principal.getPassword(),
+        ByteSource.Util.bytes("user"), getName());
   }
 
 

@@ -20,9 +20,11 @@ public interface ShiroUserService {
 
   /**
    * 登录逻辑，返回的是要保存到session中的登录信息
-   * @param loginAccount 登录账号
-   * @param password 密码
-   * @return
    */
-  ShiroPrincipal login(String loginAccount, char[] password);
+  ShiroPrincipal login(String loginAccount, String password);
+
+  /**
+   * 根据登录账号获取登录信息
+   */
+  ShiroPrincipal findPrincipalByLoginAccount(String loginAccount);
 }

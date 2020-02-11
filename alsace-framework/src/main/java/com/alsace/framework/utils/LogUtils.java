@@ -1,5 +1,6 @@
 package com.alsace.framework.utils;
 
+import com.google.common.base.Throwables;
 import org.slf4j.Logger;
 
 /**
@@ -32,6 +33,15 @@ public class LogUtils {
   public static void printError(Logger log, String formatter, Object... obj) {
     if (log.isErrorEnabled()) {
       log.error(formatter, obj);
+    }
+  }
+
+  /**
+   * 打印error级别日志
+   */
+  public static void printError(Logger log, Exception ex) {
+    if (log.isErrorEnabled()) {
+      log.error(Throwables.getStackTraceAsString(ex));
     }
   }
 
