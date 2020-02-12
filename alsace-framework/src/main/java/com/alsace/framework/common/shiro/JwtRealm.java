@@ -18,14 +18,14 @@ import org.apache.shiro.subject.PrincipalCollection;
 @EqualsAndHashCode(callSuper = false)
 public class JwtRealm extends AuthorizingRealm {
 
-  private ShiroUserService shiroUserService;
+  private ShiroService shiroService;
 
   @Override
   protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
     String token = principals.getPrimaryPrincipal().toString();
     String loginAccount = JwtUtils.getLoginAccount(token);
     //获取权限列表
-    List<String> perms = shiroUserService.getPermissionList(loginAccount);
+    List<String> perms = shiroService.getPermissionList(loginAccount);
     SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
     authorizationInfo.addRoles(perms);
     return authorizationInfo;
@@ -40,7 +40,7 @@ public class JwtRealm extends AuthorizingRealm {
     if (StringUtils.isBlank(loginAccount)) {
       throw new AuthenticationException("无效Token！");
     }
-    ShiroPrincipal principal = shiroUserService.findPrincipalByLoginAccount(loginAccount);
+    ShiroPrincipal principal = shiroService.login(loginAccount);
     if (principal == null) {
       throw new AuthenticationException("登录账号不存在！");
     }

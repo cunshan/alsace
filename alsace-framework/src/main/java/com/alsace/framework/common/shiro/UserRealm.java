@@ -19,14 +19,14 @@ import org.apache.shiro.util.ByteSource;
 @AllArgsConstructor
 public class UserRealm extends AuthorizingRealm {
 
-  private ShiroUserService shiroUserService;
+  private ShiroService shiroService;
 
   @Override
   protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
     ShiroPrincipal principal = (ShiroPrincipal) principalCollection.getPrimaryPrincipal();
     String loginAccount = principal.getLoginAccount();
     //获取权限列表
-    List<String> perms = shiroUserService.getPermissionList(loginAccount);
+    List<String> perms = shiroService.getPermissionList(loginAccount);
     SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
     authorizationInfo.addRoles(perms);
     return authorizationInfo;
@@ -38,7 +38,7 @@ public class UserRealm extends AuthorizingRealm {
     // 登录校验
     UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
     //用户登录逻辑
-    ShiroPrincipal principal = shiroUserService
+    ShiroPrincipal principal = shiroService
         .login(token.getUsername(), new String(token.getPassword()));
     return new SimpleAuthenticationInfo(principal, principal.getPassword(),
         ByteSource.Util.bytes("user"), getName());

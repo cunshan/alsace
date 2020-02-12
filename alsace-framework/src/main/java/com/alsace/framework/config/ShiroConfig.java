@@ -2,9 +2,10 @@ package com.alsace.framework.config;
 
 import com.alsace.framework.common.shiro.JwtFilter;
 import com.alsace.framework.common.shiro.JwtRealm;
-import com.alsace.framework.common.shiro.ShiroUserService;
+import com.alsace.framework.common.shiro.ShiroService;
 import com.alsace.framework.common.shiro.UserRealm;
 import com.alsace.framework.config.properties.AlsaceProperties;
+import com.alsace.framework.config.properties.ShiroProperties;
 import com.alsace.framework.utils.LogUtils;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -26,15 +27,17 @@ import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @Slf4j
+@ConditionalOnProperty(name = {"shiro.enabled","shiro.web.enabled"})
 public class ShiroConfig {
 
   @Resource
-  private ShiroUserService shiroUserService;
+  private ShiroService shiroService;
 
   @Resource
   private RedisSessionDAO redisSessionDAO;
@@ -43,22 +46,27 @@ public class ShiroConfig {
   private RedisCacheManager redisCacheManager;
 
   @Resource
-  private AlsaceProperties alsaceProperties;
+  private ShiroProperties shiroProperties;
 
   @Bean
   @ConditionalOnMissingBean(name = "userRealm")
   public AuthorizingRealm userRealm() {
-    if(alsaceProperties.getShiro().isJwt()){
+    if (shiroProperties.isJwt()) {
       JwtRealm jwtRealm = new JwtRealm();
-      jwtRealm.setShiroUserService(shiroUserService);
-
-      LogUtils.printInfo(log,"完成配置userRealm-jwt");
+      jwtRealm.setShiroService(shiroService);
+      jwtRealm.setAuthorizationCachingEnabled(true);
+      jwtRealm.setAuthenticationCachingEnabled(true);
+      jwtRealm.setCachingEnabled(true);
+      LogUtils.printInfo(log, "完成配置userRealm-jwt");
 
       return jwtRealm;
     }
-    UserRealm userRealm = new UserRealm(shiroUserService);
+    UserRealm userRealm = new UserRealm(shiroService);
     userRealm.setCredentialsMatcher(credentialsMatcher());
-    LogUtils.printInfo(log,"完成配置userRealm");
+    userRealm.setAuthorizationCachingEnabled(true);
+    userRealm.setAuthenticationCachingEnabled(true);
+    userRealm.setCachingEnabled(true);
+    LogUtils.printInfo(log, "完成配置userRealm");
     return userRealm;
   }
 
@@ -70,18 +78,19 @@ public class ShiroConfig {
     credentialsMatcher.setHashAlgorithmName(Md5Hash.ALGORITHM_NAME);  // 散列算法，这里使用更安全的sha256算法
     credentialsMatcher.setStoredCredentialsHexEncoded(false);  // 数据库存储的密码字段使用HEX还是BASE64方式加密
     credentialsMatcher.setHashIterations(2);  // 散列迭代次数
-    LogUtils.printInfo(log,"完成配置credentialsMatcher");
+    LogUtils.printInfo(log, "完成配置credentialsMatcher");
     return credentialsMatcher;
   }
 
 
   @Bean
-  public ShiroFilterFactoryBean shiroFilterFactoryBean(SessionsSecurityManager securityManager,ShiroFilterChainDefinition shiroFilterChainDefinition) {
+  public ShiroFilterFactoryBean shiroFilterFactoryBean(SessionsSecurityManager securityManager,
+      ShiroFilterChainDefinition shiroFilterChainDefinition) {
     ShiroFilterFactoryBean filterFactoryBean = new ShiroFilterFactoryBean();
 
-//    filterFactoryBean.setLoginUrl(loginUrl);
-//    filterFactoryBean.setSuccessUrl(successUrl);
-//    filterFactoryBean.setUnauthorizedUrl(unauthorizedUrl);
+    filterFactoryBean.setLoginUrl(shiroProperties.getLoginUrl());
+    filterFactoryBean.setSuccessUrl(shiroProperties.getSuccessUrl());
+    filterFactoryBean.setUnauthorizedUrl(shiroProperties.getUnauthorizedUrl());
 
     filterFactoryBean.setSecurityManager(securityManager);
     filterFactoryBean.setFilterChainDefinitionMap(shiroFilterChainDefinition.getFilterChainMap());
@@ -100,7 +109,7 @@ public class ShiroConfig {
   @ConditionalOnMissingBean(ShiroFilterChainDefinition.class)
   public ShiroFilterChainDefinition shiroFilterChainDefinition() {
     DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
-    chainDefinition.addPathDefinitions(shiroUserService.getPathDefinitionsMap());
+    chainDefinition.addPathDefinitions(shiroService.getPathDefinitionsMap());
     return chainDefinition;
   }
 
@@ -109,21 +118,25 @@ public class ShiroConfig {
    */
   @Bean
   @ConditionalOnMissingBean(SessionsSecurityManager.class)
-  public SessionsSecurityManager securityManager() {
+  public SessionsSecurityManager securityManager(AuthorizingRealm userRealm) {
     DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-    securityManager.setRealm(userRealm());
+    securityManager.setRealm(userRealm);
     securityManager.setCacheManager(redisCacheManager);
-    securityManager.setSessionManager(sessionManager());
-    /*
-     * 关闭shiro自带的session，详情见文档
-     * http://shiro.apache.org/session-management.html#SessionManagement-StatelessApplications%28Sessionless%29
-     */
-    DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();
-    DefaultSessionStorageEvaluator sessionStorageEvaluator = new DefaultSessionStorageEvaluator();
-    sessionStorageEvaluator.setSessionStorageEnabled(false);
-    subjectDAO.setSessionStorageEvaluator(sessionStorageEvaluator);
-    securityManager.setSubjectDAO(subjectDAO);
-    LogUtils.printInfo(log,"完成配置securityManager");
+    if (!shiroProperties.isJwt()) {
+      securityManager.setSessionManager(sessionManager());
+    } else {
+      /*
+       * 关闭shiro自带的session，详情见文档
+       * http://shiro.apache.org/session-management.html#SessionManagement-StatelessApplications%28Sessionless%29
+       */
+      DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();
+      DefaultSessionStorageEvaluator sessionStorageEvaluator = new DefaultSessionStorageEvaluator();
+      sessionStorageEvaluator.setSessionStorageEnabled(false);
+      subjectDAO.setSessionStorageEvaluator(sessionStorageEvaluator);
+      securityManager.setSubjectDAO(subjectDAO);
+    }
+
+    LogUtils.printInfo(log, "完成配置securityManager");
     return securityManager;
   }
 
@@ -135,10 +148,9 @@ public class ShiroConfig {
     DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
     // inject redisSessionDAO
     sessionManager.setSessionDAO(redisSessionDAO);
-    LogUtils.printInfo(log,"完成配置sessionManager");
+    LogUtils.printInfo(log, "完成配置sessionManager");
     return sessionManager;
   }
-
 
 
 }

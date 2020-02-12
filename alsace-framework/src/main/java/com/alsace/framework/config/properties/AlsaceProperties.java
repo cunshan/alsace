@@ -10,7 +10,4 @@ import org.springframework.stereotype.Component;
 public class AlsaceProperties {
 
 
-  private ShiroProperties shiro;
-
-
 }
