@@ -57,7 +57,7 @@ public class ShiroConfig {
       jwtRealm.setAuthorizationCachingEnabled(true);
       jwtRealm.setAuthenticationCachingEnabled(true);
       jwtRealm.setCachingEnabled(true);
-      LogUtils.printInfo(log, "完成配置userRealm-jwt");
+      LogUtils.info(log, "完成配置userRealm-jwt");
 
       return jwtRealm;
     }
@@ -66,7 +66,7 @@ public class ShiroConfig {
     userRealm.setAuthorizationCachingEnabled(true);
     userRealm.setAuthenticationCachingEnabled(true);
     userRealm.setCachingEnabled(true);
-    LogUtils.printInfo(log, "完成配置userRealm");
+    LogUtils.info(log, "完成配置userRealm");
     return userRealm;
   }
 
@@ -78,7 +78,7 @@ public class ShiroConfig {
     credentialsMatcher.setHashAlgorithmName(Md5Hash.ALGORITHM_NAME);  // 散列算法，这里使用更安全的sha256算法
     credentialsMatcher.setStoredCredentialsHexEncoded(false);  // 数据库存储的密码字段使用HEX还是BASE64方式加密
     credentialsMatcher.setHashIterations(2);  // 散列迭代次数
-    LogUtils.printInfo(log, "完成配置credentialsMatcher");
+    LogUtils.info(log, "完成配置credentialsMatcher");
     return credentialsMatcher;
   }
 
@@ -136,7 +136,7 @@ public class ShiroConfig {
       securityManager.setSubjectDAO(subjectDAO);
     }
 
-    LogUtils.printInfo(log, "完成配置securityManager");
+    LogUtils.info(log, "完成配置securityManager");
     return securityManager;
   }
 
@@ -148,7 +148,7 @@ public class ShiroConfig {
     DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
     // inject redisSessionDAO
     sessionManager.setSessionDAO(redisSessionDAO);
-    LogUtils.printInfo(log, "完成配置sessionManager");
+    LogUtils.info(log, "完成配置sessionManager");
     return sessionManager;
   }
 

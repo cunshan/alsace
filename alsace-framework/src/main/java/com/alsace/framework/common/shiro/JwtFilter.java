@@ -21,7 +21,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     try {
       executeLogin(request, response);
     } catch (Exception e) {
-      LogUtils.printError(log, e);
+      LogUtils.error(log, e);
       return false;
     }
 

@@ -34,7 +34,7 @@ public class LogAspect {
   @Before("logAop()")
   public void doBefore(JoinPoint joinPoint) {
     LogInfo logInfo = getLogInfo(joinPoint);
-    LogUtils.printInfo(log, Constants.LOG_MODIFY_BEFORE, logInfo.getOperateId(),
+    LogUtils.info(log, Constants.LOG_MODIFY_BEFORE, logInfo.getOperateId(),
         logInfo.getOperationType(), logInfo.getClassName(),
         logInfo.getMethodName(), logInfo.getArgsJson());
   }
@@ -59,7 +59,7 @@ public class LogAspect {
   @AfterReturning(value = "logAop()", returning = "res")
   public void doAfterReturning(JoinPoint joinPoint, Object res) {
     LogInfo logInfo = getLogInfo(joinPoint);
-    LogUtils.printInfo(log, Constants.LOG_MODIFY_AFTER, logInfo.getOperateId(),
+    LogUtils.info(log, Constants.LOG_MODIFY_AFTER, logInfo.getOperateId(),
         logInfo.getOperationType(), GsonUtils.toJson(res));
     saveLogInfo(logInfo);
   }
@@ -74,7 +74,7 @@ public class LogAspect {
   @AfterThrowing(value = "logAop()", throwing = "ex")
   public void doAfterThrowing(JoinPoint joinPoint, Exception ex) {
     LogInfo logInfo = getLogInfo(joinPoint);
-    LogUtils.printInfo(log, Constants.LOG_MODIFY_EXCEPTION, logInfo.getOperateId(),
+    LogUtils.info(log, Constants.LOG_MODIFY_EXCEPTION, logInfo.getOperateId(),
         logInfo.getOperationType(), Throwables.getStackTraceAsString(ex));
   }
 }

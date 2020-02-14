@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import javax.annotation.Resource;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +22,7 @@ import org.springframework.core.convert.converter.Converter;
 @Data
 public class DateRequestConfig {
 
-  @Autowired
+  @Resource
   private AlsaceProperties alsaceProperties;
 
   /**
@@ -31,7 +31,13 @@ public class DateRequestConfig {
   @Bean
   @ConditionalOnMissingBean
   public Converter<String, LocalDate> localDateConverter() {
-    return source -> LocalDate.parse(source, DateTimeFormatter.ofPattern(alsaceProperties.getDateFormat()));
+    return new Converter<String, LocalDate>() {
+      @Override
+      public LocalDate convert(String source) {
+        return LocalDate
+            .parse(source, DateTimeFormatter.ofPattern(alsaceProperties.getDateFormat()));
+      }
+    };
   }
 
   /**
@@ -40,7 +46,13 @@ public class DateRequestConfig {
   @Bean
   @ConditionalOnMissingBean
   public Converter<String, LocalDateTime> localDateTimeConverter() {
-    return source -> LocalDateTime.parse(source, DateTimeFormatter.ofPattern(alsaceProperties.getTimeFormat()));
+    return new Converter<String, LocalDateTime>() {
+      @Override
+      public LocalDateTime convert(String source) {
+        return LocalDateTime
+            .parse(source, DateTimeFormatter.ofPattern(alsaceProperties.getTimeFormat()));
+      }
+    };
   }
 
   /**
@@ -49,7 +61,13 @@ public class DateRequestConfig {
   @Bean
   @ConditionalOnMissingBean
   public Converter<String, LocalTime> localTimeConverter() {
-    return source -> LocalTime.parse(source, DateTimeFormatter.ofPattern(alsaceProperties.getTimeFormat()));
+    return new Converter<String, LocalTime>() {
+      @Override
+      public LocalTime convert(String source) {
+        return LocalTime
+            .parse(source, DateTimeFormatter.ofPattern(alsaceProperties.getTimeFormat()));
+      }
+    };
   }
 
   /**
@@ -58,12 +76,15 @@ public class DateRequestConfig {
   @Bean
   @ConditionalOnMissingBean
   public Converter<String, Date> dateConverter() {
-    return source -> {
-      SimpleDateFormat format = new SimpleDateFormat(alsaceProperties.getTimeFormat());
-      try {
-        return format.parse(source);
-      } catch (ParseException e) {
-        throw new RuntimeException(e);
+    return new Converter<String, Date>() {
+      @Override
+      public Date convert(String source) {
+        SimpleDateFormat format = new SimpleDateFormat(alsaceProperties.getTimeFormat());
+        try {
+          return format.parse(source);
+        } catch (ParseException e) {
+          throw new RuntimeException(e);
+        }
       }
     };
   }

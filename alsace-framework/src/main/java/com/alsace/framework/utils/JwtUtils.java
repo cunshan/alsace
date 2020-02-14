@@ -32,7 +32,7 @@ public class JwtUtils {
       DecodedJWT jwt = verifier.verify(token);
       return true;
     } catch (Exception exception) {
-      LogUtils.printError(log, exception);
+      LogUtils.error(log, exception);
       return false;
     }
   }
@@ -47,7 +47,7 @@ public class JwtUtils {
       DecodedJWT jwt = JWT.decode(token);
       return jwt.getClaim("loginAccount").asString();
     } catch (JWTDecodeException e) {
-      LogUtils.printError(log, e);
+      LogUtils.error(log, e);
       return null;
     }
   }

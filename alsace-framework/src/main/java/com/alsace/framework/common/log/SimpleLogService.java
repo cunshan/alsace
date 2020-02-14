@@ -12,7 +12,7 @@ public class SimpleLogService implements LogService {
   @Override
   public void saveLog(LogInfo logInfo) {
 
-    LogUtils.printInfo(log, "持久化保存日志信息:{}", GsonUtils.toJson(logInfo));
+    LogUtils.info(log, "持久化保存日志信息:{}", GsonUtils.toJson(logInfo));
 
   }
 }

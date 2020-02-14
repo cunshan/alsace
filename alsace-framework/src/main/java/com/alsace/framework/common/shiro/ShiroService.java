@@ -2,6 +2,7 @@ package com.alsace.framework.common.shiro;
 
 import java.util.List;
 import java.util.Map;
+import org.apache.shiro.authc.AuthenticationException;
 
 /**
  * shiro框架调用的获取权限的服务接口
@@ -21,10 +22,6 @@ public interface ShiroService {
   /**
    * 普通登录逻辑，返回的是要保存到session中的登录信息
    */
-  ShiroPrincipal login(String loginAccount, String password);
+  ShiroPrincipal login(String loginAccount, String passwordOrToken) throws AuthenticationException;
 
-  /**
-   * JWT登录逻辑，根据登录账号获取登录信息
-   */
-  ShiroPrincipal login(String loginAccount);
 }

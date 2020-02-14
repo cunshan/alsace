@@ -12,7 +12,7 @@ public class LogUtils {
   /**
    * 打印info级别日志
    */
-  public static void printInfo(Logger log, String formatter, Object... obj) {
+  public static void info(Logger log, String formatter, Object... obj) {
     if (log.isInfoEnabled()) {
       log.info(formatter, obj);
     }
@@ -21,7 +21,7 @@ public class LogUtils {
   /**
    * 打印info级别日志
    */
-  public static void printInfo(Logger log, String message) {
+  public static void info(Logger log, String message) {
     if (log.isInfoEnabled()) {
       log.info(message);
     }
@@ -30,7 +30,7 @@ public class LogUtils {
   /**
    * 打印error级别日志
    */
-  public static void printError(Logger log, String formatter, Object... obj) {
+  public static void error(Logger log, String formatter, Object... obj) {
     if (log.isErrorEnabled()) {
       log.error(formatter, obj);
     }
@@ -39,7 +39,7 @@ public class LogUtils {
   /**
    * 打印error级别日志
    */
-  public static void printError(Logger log, Exception ex) {
+  public static void error(Logger log, Exception ex) {
     if (log.isErrorEnabled()) {
       log.error(Throwables.getStackTraceAsString(ex));
     }
@@ -48,7 +48,7 @@ public class LogUtils {
   /**
    * 打印error级别日志
    */
-  public static void printError(Logger log, String message) {
+  public static void error(Logger log, String message) {
     if (log.isErrorEnabled()) {
       log.error(message);
     }
@@ -57,7 +57,7 @@ public class LogUtils {
   /**
    * 打印warn级别日志
    */
-  public static void printWarn(Logger log, String formatter, Object... obj) {
+  public static void warn(Logger log, String formatter, Object... obj) {
     if (log.isWarnEnabled()) {
       log.warn(formatter, obj);
     }
@@ -66,7 +66,7 @@ public class LogUtils {
   /**
    * 打印warn级别日志
    */
-  public static void printWarn(Logger log, String message) {
+  public static void warn(Logger log, String message) {
     if (log.isWarnEnabled()) {
       log.warn(message);
     }
@@ -75,7 +75,7 @@ public class LogUtils {
   /**
    * 打印debug级别日志
    */
-  public static void printDebug(Logger log, String formatter, Object... obj) {
+  public static void debug(Logger log, String formatter, Object... obj) {
     if (log.isDebugEnabled()) {
       log.debug(formatter, obj);
     }
@@ -84,7 +84,7 @@ public class LogUtils {
   /**
    * 打印debug级别日志
    */
-  public static void printDebug(Logger log, String message) {
+  public static void debug(Logger log, String message) {
     if (log.isDebugEnabled()) {
       log.debug(message);
     }

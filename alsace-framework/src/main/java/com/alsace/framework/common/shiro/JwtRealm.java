@@ -40,14 +40,7 @@ public class JwtRealm extends AuthorizingRealm {
     if (StringUtils.isBlank(loginAccount)) {
       throw new AuthenticationException("无效Token！");
     }
-    ShiroPrincipal principal = shiroService.login(loginAccount);
-    if (principal == null) {
-      throw new AuthenticationException("登录账号不存在！");
-    }
-    if (!JwtUtils.verify(token, loginAccount, principal.getPassword())) {
-      throw new AuthenticationException("Token失效，请重新登录！");
-    }
-
+    shiroService.login(loginAccount,token);
     return new SimpleAuthenticationInfo(token, token, getName());
   }
 

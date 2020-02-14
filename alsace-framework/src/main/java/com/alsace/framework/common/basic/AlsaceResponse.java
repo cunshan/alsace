@@ -1,10 +1,12 @@
 package com.alsace.framework.common.basic;
 
 import java.io.Serializable;
+import lombok.Data;
 
 /**
  * 请求返回参数
  */
+@Data
 public class AlsaceResponse implements Serializable {
 
   private static final long serialVersionUID = 8933245719351162749L;
@@ -36,7 +38,7 @@ public class AlsaceResponse implements Serializable {
     private Object data;//返回的业务数据
 
 
-    public void Builder(boolean success){
+    public Builder(boolean success){
       this.success = success;
     }
 
