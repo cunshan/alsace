@@ -1,11 +1,14 @@
 package com.alsace.framework.common.shiro;
 
+import com.alsace.framework.common.basic.AlsaceResponse.Builder;
+import com.alsace.framework.utils.GsonUtils;
 import com.alsace.framework.utils.LogUtils;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,14 +21,16 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
   @Override
   protected boolean isAccessAllowed(ServletRequest request, ServletResponse response,
       Object mappedValue) {
+
+    boolean res;
     try {
-      executeLogin(request, response);
+      res = executeLogin(request, response);
     } catch (Exception e) {
       LogUtils.error(log, e);
       return false;
     }
 
-    return true;
+    return res;
   }
 
 
@@ -58,7 +63,14 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     String token = header.substring(header.indexOf(' ')+1);
     JwtToken jwtToken = new JwtToken(token);
     //登录操作
-    getSubject(request, response).login(jwtToken);
+    try {
+      getSubject(request, response).login(jwtToken);
+    }catch (AuthenticationException ex){
+      response.setCharacterEncoding("UTF-8");
+      response.setContentType("application/json;charset=UTF-8");
+      response.getWriter().println(GsonUtils.toJson(new Builder(false).code(HttpStatus.UNAUTHORIZED.value()).msg(ex.getMessage()).build()));
+      return false;
+    }
     return true;
   }
 }
