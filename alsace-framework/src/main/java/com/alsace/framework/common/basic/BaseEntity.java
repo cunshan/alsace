@@ -22,4 +22,9 @@ public class BaseEntity implements Serializable {
   private Date modifiedTime;//修改时间
   private String modifiedBy;//修改人
 
+
+  public String getIdStr(){
+    return this.getId().toString();
+  }
+
 }
