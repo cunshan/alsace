@@ -1,5 +1,6 @@
 package com.alsace.framework.common.basic;
 
+import com.github.pagehelper.Page;
 import java.util.List;
 
 /**
@@ -10,11 +11,11 @@ public interface BaseService<T,ID> {
   /**
    * 创建
    */
-  T create(T domain);
+  T save(T domain);
   /**
    * 创建
    */
-  List<T> createBatch(List<T> list);
+  List<T> saveBatch(List<T> list);
 
   /**
    * 创建
@@ -29,7 +30,7 @@ public interface BaseService<T,ID> {
   /**
    * 根据ID获取实体类
    */
-  T getById(ID id);
+  T findById(ID id);
 
   /**
    * 根据ID删除数据
@@ -39,6 +40,6 @@ public interface BaseService<T,ID> {
   /**
    * 分页查询
    */
-  List<T> queryPage(T param);
+  Page<T> queryPage(T param);
 
 }

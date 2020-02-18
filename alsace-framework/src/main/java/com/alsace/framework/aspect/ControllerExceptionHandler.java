@@ -1,6 +1,8 @@
 package com.alsace.framework.aspect;
 
 import com.alsace.framework.common.basic.AlsaceResponse;
+import com.alsace.framework.utils.LogUtils;
+import com.google.common.base.Throwables;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,7 @@ public class ControllerExceptionHandler {
   @ExceptionHandler(AuthenticationException.class)
   @ResponseBody
   public AlsaceResponse authenticationException(AuthenticationException ex){
+    LogUtils.info(log, Throwables.getStackTraceAsString(ex));
     return new AlsaceResponse.Builder(false).code(HttpStatus.UNAUTHORIZED.value()).msg(ex.getMessage()).build();
   }
 
