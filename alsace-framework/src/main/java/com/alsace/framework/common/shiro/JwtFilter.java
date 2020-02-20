@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
+import org.apache.shiro.web.util.WebUtils;
 import org.springframework.http.HttpStatus;
 
 @Slf4j
@@ -66,21 +67,11 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 
 
   @Override
-  protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException ex,
-      ServletRequest request, ServletResponse response) {
-    try {
-      response.getWriter().println(GsonUtils.toJson(
-          new Builder(false).code(HttpStatus.UNAUTHORIZED.value()).msg(ex.getMessage()).build()));
-    } catch (IOException e) {
-      LogUtils.error(log, e);
-    }
-    return false;
-  }
-
-  @Override
   protected boolean sendChallenge(ServletRequest request, ServletResponse response) {
     try {
-      response.getWriter().println(GsonUtils.toJson(
+      HttpServletResponse httpResponse = WebUtils.toHttp(response);
+      httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      httpResponse.getWriter().println(GsonUtils.toJson(
           new Builder(false).code(HttpStatus.UNAUTHORIZED.value()).msg("Token无效，请重新登录！").build()));
     } catch (IOException e) {
       LogUtils.error(log, e);
