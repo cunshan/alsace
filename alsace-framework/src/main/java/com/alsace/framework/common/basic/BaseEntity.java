@@ -21,6 +21,7 @@ public class BaseEntity implements Serializable {
   private String createdBy;//创建人
   private Date modifiedTime;//修改时间
   private String modifiedBy;//修改人
+  private String remark;//备注
 
 
   public String getIdStr(){
