@@ -23,6 +23,8 @@ public class BaseEntity implements Serializable {
   private String modifiedBy;//修改人
   private String remark;//备注
 
+  private Integer activeFlag;//有效无效标记  1 有效 0 无效
+
 
   public String getIdStr(){
     return this.getId().toString();

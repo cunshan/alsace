@@ -1,6 +1,7 @@
 package com.alsace.framework.config;
 
 import com.alsace.framework.config.properties.AlsaceProperties;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ import java.util.Date;
 import javax.annotation.Resource;
 import lombok.Data;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -89,5 +91,16 @@ public class DateRequestConfig {
     };
   }
 
+  /**
+   * 解决Jackson导致Long型数据精度丢失问题
+   *
+   * @return
+   */
+  @Bean("jackson2ObjectMapperBuilderCustomizer")
+  public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
+    Jackson2ObjectMapperBuilderCustomizer customizer = jacksonObjectMapperBuilder -> jacksonObjectMapperBuilder.serializerByType(Long.class, ToStringSerializer.instance)
+        .serializerByType(Long.TYPE, ToStringSerializer.instance);
+    return customizer;
+  }
 
 }

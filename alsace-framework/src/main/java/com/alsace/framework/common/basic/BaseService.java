@@ -1,6 +1,6 @@
 package com.alsace.framework.common.basic;
 
-import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import java.util.List;
 
 /**
@@ -40,6 +40,8 @@ public interface BaseService<T,ID> {
   /**
    * 分页查询
    */
-  Page<T> queryPage(T param);
+  PageInfo<T> queryPage(T param);
+
+
 
 }

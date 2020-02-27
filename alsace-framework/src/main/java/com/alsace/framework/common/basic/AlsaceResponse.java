@@ -2,6 +2,7 @@ package com.alsace.framework.common.basic;
 
 import java.io.Serializable;
 import lombok.Data;
+import org.springframework.http.HttpStatus;
 
 /**
  * 请求返回参数
@@ -31,15 +32,19 @@ public class AlsaceResponse implements Serializable {
   public static class Builder{
     private int code;//返回状态编码
 
-    private boolean success;//请求是否成功
+    private boolean success = true;//请求是否成功
 
     private String msg;//返回的信息
 
     private Object data;//返回的业务数据
 
+    public Builder(){
+      this(true);
+    }
 
     public Builder(boolean success){
       this.success = success;
+      this.code = HttpStatus.OK.value();
     }
 
     public Builder code(int code){

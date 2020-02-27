@@ -31,12 +31,10 @@ public class ControllerExceptionHandler {
    */
   @ExceptionHandler(Exception.class)
   @ResponseBody
-  public AlsaceResponse bizException(Exception ex){
+  public AlsaceResponse exception(Exception ex){
     LogUtils.error(log, Throwables.getStackTraceAsString(ex));
     return new AlsaceResponse.Builder(false).code(HttpStatus.OK.value()).msg(ex.getMessage()).build();
   }
-
-
 
 
 }
