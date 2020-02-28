@@ -19,4 +19,9 @@ public interface BaseMapper<T extends BaseEntity> {
    */
   void deleteByIds(@Param("entity") T domain,List<Long> ids);
 
+  /**
+   * 根据条件查询单条记录
+   */
+  T findOneByCondition(@Param("entity") T domain);
+
 }
