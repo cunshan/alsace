@@ -114,28 +114,5 @@
     <!--</plugins>-->
   <!--</build>-->
 
-  <!--<repositories>-->
-    <!--<repository>-->
-      <!--<id>central</id>-->
-      <!--<name>aliyun maven</name>-->
-      <!--<url>http://maven.aliyun.com/nexus/content/groups/public/</url>-->
-      <!--<layout>default</layout>-->
-      <!--&lt;!&ndash; 是否开启发布版构件下载 &ndash;&gt;-->
-      <!--<releases>-->
-        <!--<enabled>true</enabled>-->
-      <!--</releases>-->
-      <!--&lt;!&ndash; 是否开启快照版构件下载 &ndash;&gt;-->
-      <!--<snapshots>-->
-        <!--<enabled>false</enabled>-->
-      <!--</snapshots>-->
-    <!--</repository>-->
-  <!--</repositories>-->
-  <distributionManagement>
-    <repository>
-      <id>github</id>
-      <name>GitHub cunshan Apache Maven Packages</name>
-      <url>https://maven.pkg.github.com/cunshan/alsace</url>
-    </repository>
-  </distributionManagement>
 
 </project>
