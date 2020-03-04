@@ -13,6 +13,8 @@ public class AlsaceProperties {
   private String dateFormat = "yyyy-MM-dd";
   private String timeFormat = "yyyy-MM-dd HH:mm:ss";
 
+  private SeaweedfsProperties seaweedfs;
+
 
 
 }

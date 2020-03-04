@@ -73,6 +73,10 @@
       <artifactId>gson</artifactId>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>net.anumbrella.seaweedfs</groupId>
+      <artifactId>seaweedfs-java-client</artifactId>
+    </dependency>
   </dependencies>
 
 

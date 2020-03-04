@@ -102,6 +102,11 @@
         <version>2.8.6</version>
         <optional>true</optional>
       </dependency>
+      <dependency>
+        <groupId>net.anumbrella.seaweedfs</groupId>
+        <artifactId>seaweedfs-java-client</artifactId>
+        <version>0.0.2.RELEASE</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
